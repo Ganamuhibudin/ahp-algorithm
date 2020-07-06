@@ -1,0 +1,70 @@
+10
+
+dir
+0
+https://svn.edi-indonesia.co.id:443/svn/ediiproduct/kite-pembebasan/app/libraries/captcha
+https://svn.edi-indonesia.co.id:443/svn/ediiproduct
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+
+
+
+
+
+
+
+
+
+
+
+01a861d6-cd53-0444-bb43-26692393ddf8
+
+teks.txt
+file
+
+
+
+add
+
+simplecaptcha.class.php
+file
+
+
+
+add
+
+captcha.php
+file
+
+
+
+add
+
+fonts
+dir
+
+
+
+add
+
+captcha2.php
+file
+
+
+
+add
+
+index.php
+file
+
+
+
+add
+

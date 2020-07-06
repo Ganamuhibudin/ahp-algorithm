@@ -1,0 +1,77 @@
+10
+
+dir
+0
+https://svn.edi-indonesia.co.id:443/svn/ediiproduct/kite-pembebasan/app/views/pemasukan/bc20/cetak
+https://svn.edi-indonesia.co.id:443/svn/ediiproduct
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+
+
+
+
+
+
+
+
+
+
+
+01a861d6-cd53-0444-bb43-26692393ddf8
+
+print_dok.php
+file
+
+
+
+add
+
+bc23_lampiran1.php
+file
+
+
+
+add
+
+bc23_lampiran2.php
+file
+
+
+
+add
+
+bc23_lampiran3.php
+file
+
+
+
+add
+
+bc23_lampiran4.php
+file
+
+
+
+add
+
+bc23_lampiran_lanjutan.php
+file
+
+
+
+add
+
+print_dok_fpdf.php
+file
+
+
+
+add
+

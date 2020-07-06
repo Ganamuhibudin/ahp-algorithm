@@ -1,0 +1,54 @@
+<?php 
+	if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+		error_reporting(E_ALL);
+	/**
+	* 
+	*/
+	class mycaptcha {
+		
+		function __construct(){
+			$CI =& get_instance();
+		}
+
+		function captcha() {
+			// return "aaaaa"; die();
+			// $CI =& get_instance();
+			// $CI->load->library('session');
+			$string = '';
+			for ($i = 0; $i < 5; $i++) {
+				$string .= chr(rand(97, 122));
+			}
+			// echo $array['captkodex'] = $string;
+			// $this->session->set_userdata('captkodex') = $string;
+			// $CI->session->set_userdata('captkodex') = $string;
+			// echo $string;
+			$dir = 'fonts/';
+			// $dir = base_url().'assets/fonts/';
+			$image = imagecreatetruecolor(180, 50);
+			$font = $_SERVER['DOCUMENT_ROOT']."/plb/assets/fonts/VeraSansBold.ttf";
+
+			$locationFont = $font;
+			// echo $location;
+			$num2 = rand(1,2);
+			if($num2==1){
+				$color = imagecolorallocate($image, 113, 193, 217);// color
+			}
+			else{
+				$color = imagecolorallocate($image, 163, 197, 82);// color
+			}
+			// background transparant
+			imagesavealpha($image, true);
+			$trans_colour = imagecolorallocatealpha($image, 0, 0, 0, 127);
+			imagefill($image, 0, 0, $trans_colour);
+			$red = imagecolorallocate($image, 255, 0, 0);
+			imagefilledellipse($image, 400, 300, 400, 300, $red);
+
+			// background color white
+			/*$white = imagecolorallocate($image, 231, 235, 238); 
+			imagefilledrectangle($image,0,0,399,99,$white);*/
+			// echo $string;
+			imagettftext ($image, 30, 0, 10, 40, $color, $locationFont, $string);
+			header("Content-type: image/png");
+			imagepng($image);
+		}
+	}

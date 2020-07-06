@@ -1,0 +1,198 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+	error_reporting(E_ERROR);
+	$eventButton = "tb_search('barang','id_barang_1;kode_barang_1;jenis_barang_1;nama_barang_1;uraian_1;satuan_1','Kode Barang','fpengadaan',680,445)";
+	if (strtolower($act) == "save") {
+		$action = "add";
+	} else {
+		$action = "edit";
+	}
+?>
+<div class="header">
+	<h3><strong><?=$judul?></strong></h3>
+</div>
+<div class="content">
+	<?php
+		if (strtolower($act) == "save") {
+			$action = "add";
+		} else {
+			$action = "edit";
+		}
+	?>
+	<form name="fpengadaan" id="fpengadaan" action="<?= site_url()."/pemasukan/".$action."/pengadaan"?>" method="post" class="form-horizontal" role="form">
+		<input type="hidden" name="act" id="act" value="<?= $act;?>" />
+		<input type="hidden" name="id_pemasukan" id="id_pemasukan" value="<?= $sess['id_pemasukan']?>" />
+		<table width="100%">
+			<tr>
+				<td width="50%">
+					<table>
+						<tr>
+			            	<td width="30%">Nomor Pengadaan</td>
+							<td width="70%">
+								<input type="text" name="data[nomor_pengadaan]" id="nomor_pengadaan" value="<?= $sess['nomor_pengadaan']?>" class="mtext" wajib="yes"/>
+							</td>
+						</tr>
+						<tr>
+			            	<td width="30%">Tanggal</td>
+							<td width="70%">
+								<input type="text" name="data[tanggal]" id="tanggal" class="stext date" value="<?= $sess['tanggal']; ?>" onfocus="ShowDP('tanggal')" wajib="yes"/>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table>
+						<tr>
+			            	<td width="30%">Nomor Invoice</td>
+							<td width="70%">
+								<input type="text" name="data[nomor_invoice]" id="nomor_invoice" value="<?= $sess['nomor_invoice']?>" class="mtext" wajib="yes">
+							</td>
+						</tr>
+						<tr>
+			            	<td width="30%">Nama Vendor</td>
+							<td width="70%">
+								<input type="text" name="data[vendor]" id="vendor" value="<?= $sess['vendor']?>" class="mtext" wajib="yes">
+							</td>
+						</tr>
+						<tr>
+			            	<td width="30%">Keterangan</td>
+							<td width="70%">
+								<textarea type="text" name="data[keterangan]" id="keterangan" class="mtext"><?= $sess['keterangan']?></textarea>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+        	<tr>
+        		<td colspan="2">
+					<h5 class="header smaller lighter green">
+						<strong>Data Barang</strong>
+					</h5>
+					<button type="button" class="btn btn-primary btn-sm" onclick="addRow()"><i class="fa fa-plus"></i> Tambah</button>
+					<div id="data-barang" style="padding-top: 1%;">
+						<table id="tabel-barang" class="tabelajax">
+							<thead>
+								<tr>
+									<th width="15%">Kode Barang</th>
+									<th width="5%">Jenis Barang</th>
+									<th width="5%">Nama Barang</th>
+									<th width="5%">Uraian Barang</th>
+									<th width="3%">Satuan</th>
+									<th width="5%">Jumlah</th>
+									<th width="8%">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php if ($act == "save"){ ?>
+									<tr id="tr_1">
+										<td>
+											<input type="hidden" name="detail[id_barang][]" id="id_barang_1"/>
+											<input type="text" name="kode_barang[]" id="kode_barang_1" readonly="" class="mtext" wajib="yes"/>
+										</td>
+										<td>
+											<input type="text" name="jenis_barang[]" id="jenis_barang_1" readonly="" class="stext" wajib="yes"/>
+										</td>
+										<td>
+											<input type="text" name="nama_barang[]" id="nama_barang_1" readonly="" class="mtext" wajib="yes"/>
+										</td>
+										<td>
+											<input type="text" name="uraian[]" id="uraian_1" readonly="" class="mtext" wajib="yes"/>
+										</td>
+										<td>
+											<input type="text" name="satuan[]" id="satuan_1" readonly="" class="stext date" wajib="yes"/>
+										</td>
+										<td>
+											<input type="text" name="detail[jumlah][]" id="jumlah_1" class="stext" wajib="yes"/>
+										</td>
+										<td>
+											<center>
+												<button type="button" class="btn btn-warning btn-sm" onclick="searchBarang(1)"><i class="fa fa-edit"></i></button>
+												<button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(1)"><i class="fa fa-trash-o"></i></button>
+											</center>
+										</td>
+									</tr>
+								<?php
+									} else {
+										for ($i=0; $i < count(array_keys($barang)); $i++) { 
+								?>
+									<tr id="tr_<?=$i?>">
+											<td>
+												<input type="hidden" name="detail[id_barang][]" id="id_barang_<?=$i?>" value="<?= $barang[$i]['id_barang'] ?>"/>
+												<input type="text" name="kode_barang[]" id="kode_barang_<?=$i?>" readonly="" class="mtext" wajib="yes"value="<?= $barang[$i]['kode_barang'] ?>"/>
+											</td>
+											<td>
+												<input type="text" name="jenis_barang[]" id="jenis_barang_<?=$i?>" readonly="" class="stext" wajib="yes" value="<?= $barang[$i]['jenis_barang'] ?>"/>
+											</td>
+											<td>
+												<input type="text" name="nama_barang[]" id="nama_barang_<?=$i?>" readonly="" class="mtext" wajib="yes"value="<?= $barang[$i]['nama_barang'] ?>" />
+											</td>
+											<td>
+												<input type="text" name="uraian[]" id="uraian_<?=$i?>" readonly="" class="mtext" wajib="yes" value="<?= $barang[$i]['uraian'] ?>"/>
+											</td>
+											<td>
+												<input type="text" name="satuan[]" id="satuan_<?=$i?>" readonly="" class="stext date" wajib="yes" value="<?= $barang[$i]['satuan'] ?>"/>
+											</td>
+											<td>
+												<input type="text" name="detail[jumlah][]" id="jumlah_<?=$i?>" class="stext" wajib="yes" value="<?= $barang[$i]['jumlah'] ?>"/>
+											</td>
+											<td>
+												<center>
+													<button type="button" class="btn btn-warning btn-sm" onclick="searchBarang(<?=$i?>)"><i class="fa fa-edit"></i></button>
+													<button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(<?=$i?>)"><i class="fa fa-trash-o"></i></button>
+												</center>
+											</td>
+										</tr>
+								<?php } } ?>
+							</tbody>
+						</table>
+					</div>
+        		</td>
+        	</tr>
+            <tr>
+            	<td colspan="2">&nbsp;</td>
+            </tr>
+			<tr>
+				<td colspan="2">
+				<a href="javascript:void(0)" class="btn btn-success btn-sm" onclick="save_post('#fpengadaan')">
+					<i class="fa fa-save"></i> <?php echo ucwords($act) ?>
+				</a>
+				<a href="<?= site_url() . '/pemasukan/pengadaan/list';?>" class="btn btn-danger btn-sm"><i class="fa icon-undo"></i>Cancel</a>
+				<span class="msg_" id="msg_">&nbsp;</span>
+				</td>
+			</tr>
+        </table>
+	</form>
+</div>
+<script type="text/javascript">
+	FormReady();
+	function addRow() {
+		var number = Math.floor(Math.random() * 1001);
+		var row = '<tr id="tr_'+number+'"><td>';
+		row += '<input type="hidden" name="detail[id_barang][]" id="id_barang_'+number+'"/>';
+		row += '<input type="text" name="kode_barang[]" id="kode_barang_'+number+'" readonly="" class="mtext" wajib="yes"/>';
+		row += '</td><td>';
+		row += '<input type="text" name="jenis_barang[]" id="jenis_barang_'+number+'" readonly="" class="stext" wajib="yes"/>';
+		row += '</td><td>';
+		row += '<input type="text" name="nama_barang[]" id="nama_barang_'+number+'" readonly="" class="mtext" wajib="yes"/>';
+		row += '</td><td>';
+		row += '<input type="text" name="uraian[]" id="uraian_'+number+'" readonly="" class="mtext" wajib="yes"/>';
+		row += '</td><td>';
+		row += '<input type="text" name="satuan[]" id="satuan_'+number+'" readonly="" class="stext date" wajib="yes"/>';
+		row += '</td><td>';
+		row += '<input type="text" name="detail[jumlah][]" id="jumlah_'+number+'" class="stext" wajib="yes"/>';
+		row += '</td><td>';
+		row += '<center><button type="button" class="btn btn-warning btn-sm" onclick="searchBarang('+number+')"><i class="fa fa-edit"></i></button>&nbsp;<button type="button" class="btn btn-danger btn-sm" onclick="deleteRow('+number+')"><i class="fa fa-trash-o"></i></button></center>';
+		row += '</td></tr>';
+		$('#tabel-barang tbody').append(row);
+	}
+
+	function searchBarang(id) {
+		tb_search('barang','id_barang_'+id+';kode_barang_'+id+';jenis_barang_'+id+';nama_barang_'+id+';uraian_'+id+';satuan_'+id+'','Kode Barang','fpengadaan',680,445);
+	}
+
+	function deleteRow(id) {
+		$('#tr_'+id).remove();
+	}
+</script>
